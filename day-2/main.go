@@ -8,20 +8,32 @@ import (
 )
 
 func main() {
-	partOne()
+	fmt.Println("Part one:", calc(12, 2))
+	partTwo()
 }
 
-func partOne() {
+func partTwo() {
+	for i := 0; i <= 99; i++ {
+		for j := 99; j >= 0; j-- {
+			v := calc(i, j)
+			if v == 19690720 {
+				fmt.Println(i, j, 100*i+j)
+				return
+			}
+		}
+	}
+}
+
+func calc(noun, verb int) int {
 	inputBytes, _ := ioutil.ReadFile("input.txt")
 	input := []int{}
 	for _, i := range bytes.Split(bytes.TrimSuffix(inputBytes, []byte("\n")), []byte(",")) {
 		n, _ := strconv.Atoi(string(i))
 		input = append(input, n)
 	}
-	input[1] = 12
-	input[2] = 2
+	input[1] = noun
+	input[2] = verb
 	for i := 0; i < len(input)-4; i += 4 {
-		fmt.Println(input[i], input[i+1], input[i+2], input[i+3])
 		switch input[i] {
 		case 1:
 			index := input[i+3]
@@ -39,5 +51,5 @@ func partOne() {
 			fmt.Println("error:", input[i])
 		}
 	}
-	fmt.Println(input[0])
+	return input[0]
 }
